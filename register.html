@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <title>注册</title>
+    <link rel="stylesheet" href="css/landscape.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/register.css">
+
+</head>
+<body>
+<div id="backImg"></div>
+<div id="register-box">
+    <div class="box">
+        <h1>新用户注册</h1>
+        <div class="user-input">
+            <div class="uploadPhoto">
+				<img src="images/symbols-avatar-upload.png" id="imgs" alt=""/>
+				<input type="file" class="upload_pic" id="uploadPhoto" />
+			</div>
+			<div class="role">
+				<label for="teacher" style="">
+					<input name="4" type="radio" id="teacher" value="1">
+					<div class="option"></div>
+					<span>老师</span> 
+				</label>
+				<label for="student" style="">
+					<input name="4" type="radio" id="student" value="0">
+					<div class="option"></div>
+					<span>学生</span> 
+				</label>
+			</div>
+            <input id='account' type="text" placeholder="用户名"/>
+            <input id='password' type="password" placeholder="密码"/>
+            <input id='repassword' type="password" placeholder="确认密码"/>
+			
+			
+        </div>
+		
+        <button type="button" class="register-btn" onclick="register();">注册</button>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script>
+
+var server='http://116.255.173.207/v1/api/';
+	
+function register(){
+	var account= $('#account').val().trim();
+	var secret = $('#password').val().trim();
+	var repassword = $('#repassword').val().trim();
+	var headImage=$('#imgs').attr('src').trim();
+	var userType=$('.role').find('input[type="radio"]:checked').val();//1是老师 0是学生
+	
+	if(!userType){
+		alert('角色为必选')
+	}
+	else if(!account) {
+		alert('账号不能为空')
+	}
+	else if(!secret) {
+		alert('请输入密码')
+	}
+	else if(repassword!=secret) {
+		alert('两次密码不一致，请重新输入密码');
+		('#password').val('')
+		('#repassword').val('')
+	}
+	else{
+		if(userType=="1"){//老师
+			window.location.href="page/teacher/select-unit.html?account="+account+'&secret='+secret+'&headImage='+headImage;
+		}else if(userType=="0"){
+			window.location.href="page/student/select-class.html?account="+account+'&secret='+secret+'&headImage='+headImage;
+		}
+		/*doRegister(userType,account, secret,headImage);*/
+	
+	}
+	
+}
+/*function doRegister(userType,account,secret,headImage){
+	if(userType==0){//老师
+
+	}else{  //学生
+
+	}
+	
+}*/
+
+//获取上传按钮
+var input1 = document.getElementById("uploadPhoto");
+
+if(typeof FileReader==='undefined'){
+	//result.innerHTML = "抱歉，你的浏览器不支持 FileReader";
+	input1.setAttribute('disabled','disabled');
+}else{
+	input1.addEventListener('change',readFile,false);
+}
+function readFile(){
+	var file = this.files[0];
+	/*console.log(file);  //获取到的文件*/
+	if(!/image\/\w+/.test(file.type)){
+		alert("文件必须为图片！");
+		return false;
+	}
+	var reader = new FileReader();
+	reader.readAsDataURL(file); //将图片转换成base64编码格式
+	console.log(file);  //获取到的文件
+	//当文件读取成功便可以调取上传的接口，想传哪里传哪里
+	reader.onload = function(e){
+		/*var data = this.result.split(',');
+		var tp = (file.type == 'image/png')? 'png': 'jpg';
+		var image_base64 = data[1];//就是base64*/
+		var fileData = $('#uploadPhoto')[0].files[0];
+        var formData = new FormData();
+        formData.append("file", fileData);
+        formData.append("token", "");
+        $.ajax({
+            url: server + "comm/uploadfile",
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+				$('#imgs').attr('src',result.obj);
+            },
+            error: function (err) {
+				alert("上传头像失败，请重新上传头像")
+            }
+        });
+	}
+};
+</script>
+</body>
+</html>

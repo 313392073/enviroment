@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="width=device-width,initial-scale=1.0,user-scalable=yes,minimum-scale=1.0,maximum-scale=3.0" id="viewport" name="viewport">
+	<title></title>	
+</head>
+<body>
+	跳转……
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+		var loginFlag = checkLogin();
+		if(loginFlag===false){
+			window.location.href='login.html'
+		}
+		else if(loginFlag==0){
+			window.location.href='page/student/read-short-sentences.html'
+		}
+		else if(loginFlag==1){
+			window.location.href='page/teacher/home-page.html'
+		}
+		else {
+			window.location.href='login.html'
+		}
+	</script>
+</body>
+</html>

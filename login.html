@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)file:///C:/Users/admin/Desktop/login_files/demo.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
+<title>登录</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/register.css"/>
+<link href="./css/login.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="login-box">
+		<div id="backImg"></div>
+		<div class="login_box">
+			<div class="login">
+				<div class="login_name">
+					<p style="font-weight: bold;font-family: PingFangSC-Medium;font-size:24px;color:#444053;text-align: left;">
+						登录
+					</p>
+				</div>
+				<input name="account" id="account" type="text" placeholder="用户名" onfocus="this.value=&#39;&#39;" onblur="if(this.value==&#39;&#39;){this.value=&#39;用户名&#39;}">
+				<input name="password" type="password" placeholder='密码' id="password">
+				<input value="登录" style="width:100%;" type="submit" onclick="login();">
+				<a href="register.html" >新用户注册</a>
+			</div>
+		</div>
+	</div>
+	
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/landscape.js"></script>
+<script type="text/javascript">
+	
+/* plus.screen.lockOrientation("landscape-primary"); // 把屏幕方向改变成横屏正方向
+plus.screen.unlockOrientation(); // 取消旋转屏幕 */
+
+var server='http://116.255.173.207/v1/api/';
+
+function Dologin(account, secret) {
+	$.ajax({
+     	type: 'GET',
+     	url: server + 'user/login?userLoginname='+account+'&userPassword='+secret,
+     	data: {},
+     	dataType: "json",
+     	success: function(back){
+			if(back.obj==null){
+				alert("账号密码不匹配")
+			}else{
+				localStorage.setItem("token",back.obj.token);
+				localStorage.setItem("user",back.obj.user);
+				localStorage.setItem("role",JSON.parse(back.obj.user).userType);
+				localStorage.removeItem("leftS");
+				window.location.href="index.html";
+			}
+     	},
+     	error: function(err){
+     		console.log(JSON.stringify(err))
+			alert('接口出错！')
+     	}
+   	});
+}
+
+function login(){
+	var account= $('#account').val().trim();
+	var secret = $('#password').val().trim();
+
+	if(!account) {
+		alert('账号不能为空')
+	}
+	else if(!secret) {
+		alert('请输入密码')
+	}
+	else{
+	
+		Dologin(account, secret)
+	
+	}
+	
+}
+</script>
+</body>
+</html>

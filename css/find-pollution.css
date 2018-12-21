@@ -1,0 +1,38 @@
+.common-content .title {
+  margin-top: 2.5rem;
+  color: #089dd5;
+  font-size: 0.8rem;
+  padding-left: 0.7rem;
+  font-weight: bold;
+  line-height: 0.9rem;
+}
+.common-content .title .icon-left {
+  display: inline-block;
+  width: 0.16rem;
+  height: 0.8rem;
+  background-color: #00b8ee;
+  vertical-align: top;
+  margin-right: 0.1rem;
+}
+.common-content .main-wrapper {
+  width: 100%;
+  height: calc(100% - 200*0.02rem);
+  overflow-y: auto;
+}
+.common-content .main-wrapper .main-box {
+  width: 100%;
+  padding: 0 11.65%;
+}
+.common-content .main-wrapper .main-box .item {
+  float: left;
+  width: 34.95%;
+  margin-right: 6.8%;
+}
+.common-content .main-wrapper .main-box .item:nth-child(2n) {
+  margin-right: 0;
+}
+.common-content .main-wrapper .main-box .item .item-title {
+  height: 1.3rem;
+  line-height: 1.3rem;
+  background-color: #00a0e6;
+}

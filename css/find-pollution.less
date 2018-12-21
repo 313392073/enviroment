@@ -1,0 +1,42 @@
+@fcolor:#089dd5;
+@bgcolor:#00a0e6;
+.common-content{
+    .title{
+        margin-top: 125*0.02rem;
+        color:@fcolor;
+        font-size: 40*0.02rem;
+        padding-left: 35*0.02rem;
+        font-weight: bold;
+        line-height: 45*0.02rem;
+        .icon-left{
+            display: inline-block;
+            width: 8*0.02rem;
+            height: 40*0.02rem;
+            background-color: #00b8ee;
+            vertical-align: top;
+            margin-right: 5*0.02rem;
+        }
+    }
+    .main-wrapper{
+        width: 100%;
+        height: calc(~"100% - 200*0.02rem");
+        overflow-y: auto;
+        .main-box{
+            width: 100%;
+            padding:0 11.65%;
+            .item{
+                float: left;
+                width: 34.95%;
+                margin-right: 6.8%;
+                &:nth-child(2n){
+                    margin-right: 0;
+                }
+                .item-title{
+                    height: 65*0.02rem;
+                    line-height: 65*0.02rem;
+                    background-color: @bgcolor;
+                }
+            }
+        }
+    }
+}
